@@ -1,6 +1,6 @@
 from setuptools import setup, find_packages
 
-from pico-ci import __version__, __description__
+from picoci import __version__, __description__
 
 setup(
     name='pico-ci',
