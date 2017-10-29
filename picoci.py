@@ -43,11 +43,20 @@ def build_and_deploy():
         return 
     
     # Clone Repo
-    clone(path)
+    if not clone(path):
+        logger.error('Repository Clone failed.')
+        shutil.rmtree(path)
+        return
     # Build App
-    build(path)
+    if not build(path):
+        logger.error('Build step failed.')
+        shutil.rmtree(path)
+        return
     # deploy App
-    deploy(path)
+    if not deploy(path):
+        logger.error('Deploy step failed.')
+        shutil.rmtree(path)
+        return
     
     #Remove the temp dir again.
     logger.debug('Removing temp dir' % path)
@@ -91,7 +100,7 @@ def deploy(path):
     logger.debug('deploy command: %s' % command)
     return run_cmd(command, logger)
 
-def run_cmd(command, logger)
+def run_cmd(command, logger):
     ''' Run shell command,
     log the shit out of errors.
         Returns success'''
